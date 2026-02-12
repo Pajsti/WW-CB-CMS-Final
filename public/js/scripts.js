@@ -42,7 +42,7 @@ function setTheme(theme) {
 function updateLogo(theme) {
   const logo = document.querySelector('header img[alt*="logo"]');
   if (logo) {
-    logo.src = theme === 'light' ? 'images/logo.png' : 'images/logo1.png';
+    logo.src = theme === 'light' ? '/images/logo.png' : '/images/logo1.png';
   }
 }
 
@@ -174,7 +174,7 @@ function bindHeaderEvents() {
 
 async function loadFeed() {
   try {
-    let res = await fetch('data/feed.json');
+    let res = await fetch('/data/feed.json');
     if (!res.ok) {
       res = await fetch('data/feed.txt');
       if (!res.ok) throw new Error('Feed not found');
@@ -519,7 +519,7 @@ async function init() {
 
 async function loadGalleryEvents() {
   try {
-    let res = await fetch('data/gallery.json');
+    let res = await fetch('/data/gallery.json');
     if (!res.ok) {
       res = await fetch('data/gallery.txt');
       if (!res.ok) throw new Error('Gallery not found');
@@ -600,7 +600,7 @@ if (document.readyState === 'loading') {
 
 async function loadGalleryEvents() {
   try {
-    let res = await fetch('data/gallery.json');
+    let res = await fetch('/data/gallery.json');
     if (!res.ok) {
       res = await fetch('data/gallery.txt');
       if (!res.ok) throw new Error('Gallery not found');
