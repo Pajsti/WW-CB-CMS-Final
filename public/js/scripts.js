@@ -176,7 +176,7 @@ async function loadFeed() {
   try {
     let res = await fetch('/data/feed.json');
     if (!res.ok) {
-      res = await fetch('data/feed.txt');
+      res = await fetch('/data/feed.txt');
       if (!res.ok) throw new Error('Feed not found');
     }
     const text = await res.text();
@@ -201,7 +201,7 @@ async function loadFeedInto(container) {
     const row = document.createElement('article');
     row.className = 'article-row';
     row.innerHTML = `
-      <a href="article.html?id=${encodeURIComponent(a.id)}" data-spa style="display:flex;gap:16px;text-decoration:none;color:inherit;width:100%;">
+      <a href="/article.html?id=${encodeURIComponent(a.id)}" data-spa style="display:flex;gap:16px;text-decoration:none;color:inherit;width:100%;">
         <div class="art-thumb"><img src="${a.image}" alt="${a.title}"></div>
         <div class="art-body">
           <div class="art-meta">
@@ -521,7 +521,7 @@ async function loadGalleryEvents() {
   try {
     let res = await fetch('/data/gallery.json');
     if (!res.ok) {
-      res = await fetch('data/gallery.txt');
+      res = await fetch('/data/gallery.txt');
       if (!res.ok) throw new Error('Gallery not found');
     }
     const text = await res.text();
@@ -602,7 +602,7 @@ async function loadGalleryEvents() {
   try {
     let res = await fetch('/data/gallery.json');
     if (!res.ok) {
-      res = await fetch('data/gallery.txt');
+      res = await fetch('/data/gallery.txt');
       if (!res.ok) throw new Error('Gallery not found');
     }
     const text = await res.text();
