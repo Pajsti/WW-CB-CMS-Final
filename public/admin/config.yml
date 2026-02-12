@@ -1,61 +1,48 @@
 backend:
   name: git-gateway
-  branch: main # Změň na svůj branch
-  
-# Nebo použij GitHub backend:
-# backend:
-#   name: github
-#   repo: username/repo-name
-#   branch: main
+  branch: main
 
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
+media_folder: "/public/gallery/uploads"
+public_folder: "/gallery/uploads"
 
 locale: "cs"
 
 collections:
-  # Aktuality / News
+  # Aktuality - ukládají se do public/data/feed.json
   - name: "news"
     label: "Aktuality"
-    folder: "src/content/news"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "Název", name: "title", widget: "string" }
-      - { label: "Datum publikace", name: "date", widget: "datetime" }
-      - { label: "Popis", name: "description", widget: "text" }
-      - { label: "Obsah", name: "body", widget: "markdown" }
-      - { label: "Obrázek", name: "image", widget: "image", required: false }
-      - { label: "Galerie", name: "gallery", widget: "list", required: false, field: { label: "Obrázek", name: "image", widget: "image" } }
-      
-  # Fotogalerie
+    label_singular: "Článek"
+    files:
+      - label: "Všechny aktuality"
+        name: "feed"
+        file: "/public/data/feed.json"
+        fields:
+          - label: "Články"
+            name: "entries"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Název", name: "title", widget: "string" }
+              - { label: "Datum", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+              - { label: "Náhledový obrázek", name: "image", widget: "image" }
+              - { label: "Galerie fotek", name: "images", widget: "list", field: { label: "Fotka", name: "photo", widget: "image" } }
+              - { label: "Krátký popis", name: "excerpt", widget: "string" }
+              - { label: "Obsah", name: "content", widget: "markdown" }
+
+  # Fotogalerie - ukládá se do public/data/gallery.json
   - name: "gallery"
     label: "Fotogalerie"
-    folder: "src/content/gallery"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Název události", name: "title", widget: "string" }
-      - { label: "Datum", name: "date", widget: "datetime" }
-      - { label: "Náhledový obrázek", name: "cover", widget: "image" }
-      - { label: "Fotky", name: "photos", widget: "list", field: { label: "Fotka", name: "photo", widget: "image" } }
-      
-  # Stránky
-  - name: "pages"
-    label: "Stránky"
+    label_singular: "Galerie"
     files:
-      - label: "O nás"
-        name: "about"
-        file: "src/content/pages/about.md"
+      - label: "Všechny galerie"
+        name: "gallery"
+        file: "/public/data/gallery.json"
         fields:
-          - { label: "Název", name: "title", widget: "string" }
-          - { label: "Obsah", name: "body", widget: "markdown" }
-          
-      - label: "Kontakt"
-        name: "contact"
-        file: "src/content/pages/contact.md"
-        fields:
-          - { label: "Název", name: "title", widget: "string" }
-          - { label: "Adresa", name: "address", widget: "text" }
-          - { label: "Email", name: "email", widget: "string" }
-          - { label: "Obsah", name: "body", widget: "markdown" }
+          - label: "Galerie"
+            name: "entries"
+            widget: "list"
+            fields:
+              - { label: "ID", name: "id", widget: "string" }
+              - { label: "Název", name: "title", widget: "string" }
+              - { label: "Náhledový obrázek", name: "cover", widget: "image" }
+              - { label: "Fotky", name: "photos", widget: "list", field: { label: "Fotka", name: "photo", widget: "image" } }
