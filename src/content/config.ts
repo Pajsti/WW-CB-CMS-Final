@@ -5,11 +5,9 @@ const newsCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.date(),
-    description: z.string(),
-    image: z.string().optional(),
-    gallery: z.array(z.object({
-      image: z.string()
-    })).optional(),
+    excerpt: z.string(),
+    image: z.string(),
+    images: z.array(z.object({ src: z.string() })).optional(),
   }),
 });
 
@@ -19,23 +17,11 @@ const galleryCollection = defineCollection({
     title: z.string(),
     date: z.date(),
     cover: z.string(),
-    photos: z.array(z.object({
-      photo: z.string()
-    })),
-  }),
-});
-
-const pagesCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    address: z.string().optional(),
-    email: z.string().optional(),
+    photos: z.array(z.object({ src: z.string() })),
   }),
 });
 
 export const collections = {
   'news': newsCollection,
   'gallery': galleryCollection,
-  'pages': pagesCollection,
 };
