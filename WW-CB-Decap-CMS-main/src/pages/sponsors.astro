@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Sponzoři — WW-CB">
+  <section class="sponsors">
+    <h2>Sponzoři</h2>
+    <div style="text-align: center;" class="sponsor-grid">
+      <img src="/images/sponsor1.png" alt="Sponsor 1">
+      <img src="/images/sponsor2.png" alt="Sponsor 2">
+      <img src="/images/sponsor3.png" alt="Sponsor 3">
+      <img src="/images/sponsor4.png" alt="Sponsor 4">
+      <img src="/images/sponsor5.png" alt="Sponsor 5">
+      <img src="/images/sponsor6.png" alt="Sponsor 6">
+      <img src="/images/sponsor7.png" alt="Sponsor 7">
+      <img src="/images/sponsor8.png" alt="Sponsor 8">
+    </div>
+  </section>
+
+  <section class="dotace">
+    <h2>Dotační podpora</h2>
+    <div class="dotace-grid">
+      <img src="/images/dotace1.png" alt="Dotace 1">
+      <p>
+        Tento projekt je spolufinancován Statutárním městem České Budějovice.<br><br>
+        Tento projekt je spolufinancován z dotačního programu Jihočeského kraje.
+      </p>
+      <img src="/images/dotace2.png" alt="Dotace 2">
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+document.body.setAttribute('data-page', 'sponsors');
+</script>

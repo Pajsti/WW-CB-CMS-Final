@@ -1,0 +1,54 @@
+[
+  {
+    "id": "mcr-2025",
+    "title": "MČR Lipno 2025",
+    "cover": "/gallery/mcr-2025/thumb.jpg",
+    "photos": [
+      "/gallery/mcr-2025/foto1.jpg",
+      "/gallery/mcr-2025/foto2.jpg",
+      "/gallery/mcr-2025/foto3.jpg",
+      "/gallery/mcr-2025/foto4.jpg"
+    ]
+  },
+  {
+    "id": "VZ-Tabor",
+    "title": "VZ Tábor - Přebor Jihočeského kraje",
+    "cover": "/gallery/tabor/foto1.jpg",
+    "photos": [
+      "/gallery/tabor/foto1.jpg",
+      "/gallery/tabor/foto2.jpg",
+      "/gallery/tabor/foto3.jpg",
+      "/gallery/tabor/foto4.jpg",
+      "/gallery/tabor/foto5.jpg",
+      "/gallery/tabor/foto6.jpg",
+      "/gallery/tabor/foto7.jpg",
+      "/gallery/tabor/foto8.jpg",
+      "/gallery/tabor/foto9.jpg",
+      "/gallery/tabor/foto10.jpg"
+    ]
+  },
+  {
+    "id": "NKZ Roudnice",
+    "title": "NKZ Roudnice",
+    "cover": "/gallery/roudnice/foto1.jpg",
+    "photos": [
+      "/gallery/roudnice/foto1.jpg",
+      "/gallery/roudnice/foto2.jpg",
+      "/gallery/roudnice/foto3.jpg",
+      "/gallery/roudnice/foto4.jpg"
+    ]
+  },
+  {
+    "id": "Veltrusy",
+    "title": "Mistrovstvím ČR dorostu ve Veltrusech",
+    "cover": "/gallery/veltrusy/foto1.jpg",
+    "photos": [
+      "/gallery/veltrusy/foto1.jpg",
+      "/gallery/veltrusy/foto2.jpg",
+      "/gallery/veltrusy/foto3.jpg",
+      "/gallery/veltrusy/foto4.jpg",
+      "/gallery/veltrusy/foto5.jpg",
+      "/gallery/veltrusy/foto6.jpg"
+    ]
+  }
+]

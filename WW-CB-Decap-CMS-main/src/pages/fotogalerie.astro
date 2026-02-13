@@ -1,0 +1,116 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const galleries = (await getCollection('gallery')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+// Převeď photos na pole stringů pro JS
+const galleriesData = galleries.map(g => ({
+  slug: g.slug,
+  title: g.data.title,
+  cover: g.data.cover,
+  photos: g.data.photos.map(p => p.src),
+}));
+---
+
+<Layout title="Fotogalerie — WW-CB">
+  <h2 class="section-title">Fotogalerie</h2>
+
+  <div id="events-list" class="events-grid">
+    {galleries.map(g => (
+      <div class="event-card" data-slug={g.slug} style="cursor:pointer">
+        <img src={g.data.cover} alt={g.data.title}>
+        <div class="event-info">
+          <h3>{g.data.title}</h3>
+          <p class="muted">{g.data.photos.length} fotek</p>
+        </div>
+      </div>
+    ))}
+    {galleries.length === 0 && <div class="empty">Žádné galerie.</div>}
+  </div>
+
+  <div id="gallery-detail" style="display:none;">
+    <a href="#" id="backToEvents" class="back" style="display:inline-block;margin-bottom:12px;color:var(--muted);text-decoration:none;font-weight:600">← Zpět</a>
+    <h3 id="eventTitle"></h3>
+    <div class="photos-grid" id="photosGrid"></div>
+  </div>
+
+  <div id="fullscreenModal" class="fullscreen-modal" style="display:none;">
+    <button id="closeModal" class="modal-close">&#215;</button>
+    <button id="prevModal" class="modal-nav modal-prev">&#8249;</button>
+    <img id="modalImg" src="" alt="">
+    <button id="nextModal" class="modal-nav modal-next">&#8250;</button>
+    <div class="modal-counter" id="modalCounter">1 / 1</div>
+  </div>
+</Layout>
+
+<script define:vars={{ galleriesData }}>
+  var currentImages = [];
+  var currentIndex = 0;
+  var modal = document.getElementById('fullscreenModal');
+  var modalImg = document.getElementById('modalImg');
+  var modalCounter = document.getElementById('modalCounter');
+
+  function updateModal() {
+    modalImg.src = currentImages[currentIndex];
+    modalCounter.textContent = (currentIndex + 1) + ' / ' + currentImages.length;
+  }
+
+  function openFullscreen(index) {
+    currentIndex = index;
+    updateModal();
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeFullscreen() {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('closeModal').onclick = closeFullscreen;
+  modal.onclick = function(e) { if (e.target === modal) closeFullscreen(); };
+  document.getElementById('prevModal').onclick = function() { if (currentIndex > 0) { currentIndex--; updateModal(); } };
+  document.getElementById('nextModal').onclick = function() { if (currentIndex < currentImages.length - 1) { currentIndex++; updateModal(); } };
+
+  document.addEventListener('keydown', function(e) {
+    if (modal.style.display === 'flex') {
+      if (e.key === 'Escape') closeFullscreen();
+      if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; updateModal(); }
+      if (e.key === 'ArrowRight' && currentIndex < currentImages.length - 1) { currentIndex++; updateModal(); }
+    }
+  });
+
+  function showGalleryDetail(gallery) {
+    document.getElementById('events-list').style.display = 'none';
+    document.getElementById('gallery-detail').style.display = 'block';
+    document.getElementById('eventTitle').textContent = gallery.title;
+    currentImages = gallery.photos;
+    currentIndex = 0;
+
+    var grid = document.getElementById('photosGrid');
+    grid.innerHTML = '';
+    gallery.photos.forEach(function(photo, index) {
+      var img = document.createElement('img');
+      img.src = photo;
+      img.alt = gallery.title;
+      img.style.cursor = 'pointer';
+      img.onclick = function() { openFullscreen(index); };
+      grid.appendChild(img);
+    });
+  }
+
+  document.getElementById('backToEvents').onclick = function(e) {
+    e.preventDefault();
+    document.getElementById('gallery-detail').style.display = 'none';
+    document.getElementById('events-list').style.display = 'grid';
+  };
+
+  document.querySelectorAll('.event-card').forEach(function(card) {
+    var slug = card.getAttribute('data-slug');
+    var gallery = galleriesData.find(function(g) { return g.slug === slug; });
+    if (gallery) card.onclick = function() { showGalleryDetail(gallery); };
+  });
+</script>
