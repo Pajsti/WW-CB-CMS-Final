@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 — Stránka nenalezena">
+  <div class="card" style="text-align:center;padding:60px 30px;max-width:600px;margin:80px auto;">
+    <div style="font-size:120px;font-weight:800;background:linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px;">
+      404
+    </div>
+    
+    <h1 style="margin:0 0 16px;font-size:32px;">Stránka nenalezena</h1>
+    
+    <p style="color:var(--muted);font-size:18px;margin:0 0 40px;line-height:1.6;">
+      Omlouváme se, ale stránka kterou hledáte neexistuje nebo byla přesunuta.
+    </p>
+    
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="/" class="btn" style="padding:16px 32px;font-size:16px;">
+        ← Zpět na homepage
+      </a>
+      <a href="/media" class="btn" style="padding:16px 32px;font-size:16px;background:transparent;border:2px solid var(--primary);color:var(--primary);">
+        Přejít na aktuality
+      </a>
+    </div>
+    
+    <div style="margin-top:60px;padding-top:40px;border-top:1px solid var(--border);">
+      <p style="color:var(--muted);font-size:14px;margin:0;">
+        Hledáte něco konkrétního? Zkuste:
+      </p>
+      <div style="display:flex;gap:20px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+        <a href="/fotogalerie" style="color:var(--primary);text-decoration:none;font-size:14px;">Fotogalerie</a>
+        <a href="/kalendar" style="color:var(--primary);text-decoration:none;font-size:14px;">Kalendář</a>
+        <a href="/about" style="color:var(--primary);text-decoration:none;font-size:14px;">O nás</a>
+        <a href="/contact" style="color:var(--primary);text-decoration:none;font-size:14px;">Kontakt</a>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+  }
+</style>

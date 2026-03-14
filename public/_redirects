@@ -1,0 +1,3 @@
+# Admin rewrite - bez trailing slash redirectu
+/admin    /admin/index.html   200!
+/admin/*  /admin/:splat       200
