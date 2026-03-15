@@ -140,7 +140,7 @@ WW-CB-CMS-Final/
 
 ### Přístup do CMS
 
-**URL:** `https://tvuj-web.netlify.app/admin/`  
+**URL:** `pajsti.netlify.app/admin/`  
 **Tajný vstup:** Klikni **2× rychle** na logo (horní levý roh)
 
 ### Přidání článku
@@ -210,12 +210,6 @@ Všechny 4 templates najdeš v projektu (jsou připravené):
 - `confirmation.html` → Potvrzení emailu po registraci
 - `recovery.html` → Obnovení hesla
 - `email-change.html` → Změna emailové adresy
-
-**Postup:**
-1. Otevři template v editoru
-2. Zkopíruj **celý obsah** (bez html/head/body tagů)
-3. V Netlify → klikni "Edit settings" u příslušného templatu
-4. Vlož obsah → Save
 
 ### Vlastní doména
 
@@ -602,8 +596,3 @@ git push origin main --force
 ## 🤝 Podpora
 
 **Issues:** https://github.com/Pajsti/WW-CB-CMS-Final/issues  
-**Email:** kontakt na klubu
-
----
-
-**Made with ❤️ for WW-CB**
