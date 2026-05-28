@@ -42,7 +42,7 @@ function setTheme(theme) {
 function updateLogo(theme) {
   const logo = document.querySelector('header img[alt*="logo"]');
   if (logo) {
-    logo.src = theme === 'light' ? '/images/logo1.png' : '/images/logo.png';
+    logo.src = theme === 'light' ? '/images/logo.png' : '/images/logo1.png';
   }
 }
 
