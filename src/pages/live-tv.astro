@@ -1,0 +1,23 @@
+---
+import { getEntry } from 'astro:content';
+
+const settings = await getEntry('settings', 'site-settings');
+const url = settings?.data.liveResultsUrl;
+
+if (url) {
+  return Astro.redirect(url, 302);
+}
+---
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <title>Live výsledky — WW-CB</title>
+</head>
+<body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#0f172a;color:#94a3b8;">
+  <div style="text-align:center;">
+    <p style="font-size:18px;">URL pro live výsledky není nastavena.</p>
+    <a href="/" style="color:#0ea5e9;">← Zpět domů</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const settings = await getEntry('settings', 'site-settings');
+if (!settings?.data.showKanal) return Astro.redirect('/');
+
+const schedule = await getEntry('canal', 'schedule');
+const d = schedule?.data;
+
+const days = [
+  { key: 'monday',    cs: 'Pondělí',  en: 'Monday' },
+  { key: 'tuesday',   cs: 'Úterý',    en: 'Tuesday' },
+  { key: 'wednesday', cs: 'Středa',   en: 'Wednesday' },
+  { key: 'thursday',  cs: 'Čtvrtek',  en: 'Thursday' },
+  { key: 'friday',    cs: 'Pátek',    en: 'Friday' },
+  { key: 'saturday',  cs: 'Sobota',   en: 'Saturday' },
+  { key: 'sunday',    cs: 'Neděle',   en: 'Sunday' },
+];
+
+const todayKey = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][new Date().getDay()];
+---
+
+<Layout title="Kanál — WW-CB">
+  <h2 class="section-title" data-i18n="canal.title">Kdy teče kanál</h2>
+
+  <div style="display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start;">
+
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead>
+          <tr style="background:var(--primary);color:#fff;">
+            <th style="padding:14px 20px;text-align:left;font-size:14px;font-weight:600;" data-i18n="canal.day">Den</th>
+            <th style="padding:14px 20px;text-align:left;font-size:14px;font-weight:600;" data-i18n="canal.times">Časy provozu</th>
+          </tr>
+        </thead>
+        <tbody>
+          {days.map((day, i) => {
+            const times = d?.[day.key as keyof typeof d] as string | undefined;
+            const isToday = day.key === todayKey;
+            return (
+              <tr style={`border-bottom:1px solid rgba(128,128,128,0.1);${isToday ? 'background:rgba(14,165,233,0.08);' : i % 2 === 0 ? '' : 'background:rgba(128,128,128,0.03);'}`}>
+                <td style={`padding:14px 20px;font-size:15px;font-weight:${isToday ? '700' : '500'};`}>
+                  <span data-i18n={`day.${day.key}`}>{day.cs}</span>
+                </td>
+                <td style="padding:14px 20px;font-size:15px;">
+                  {times
+                    ? <span>{times}</span>
+                    : <span style="color:var(--muted);font-style:italic;" data-i18n="canal.closed">Zavřeno</span>
+                  }
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="card">
+        <h3 style="margin:0 0 8px;font-size:14px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.05em;" data-i18n="canal.today">Dnes</h3>
+        {(() => {
+          const todayTimes = d?.[todayKey as keyof typeof d] as string | undefined;
+          return todayTimes
+            ? <p style="margin:0;font-size:26px;font-weight:700;color:var(--primary);line-height:1.2;">{todayTimes}</p>
+            : <p style="margin:0;font-size:16px;color:var(--muted);font-style:italic;" data-i18n="canal.closed">Zavřeno</p>;
+        })()}
+        <p style="margin:8px 0 0;font-size:13px;color:var(--muted);">
+          <span data-i18n={`day.${todayKey}`}>{days.find(x => x.key === todayKey)?.cs}</span>
+        </p>
+      </div>
+
+      {d?.note && (
+        <div class="card" style="border-left:4px solid var(--primary);">
+          <p style="margin:0;font-size:13px;line-height:1.6;color:var(--muted);">{d.note}</p>
+        </div>
+      )}
+    </div>
+
+  </div>
+</Layout>
+
+<style>
+  @media (max-width:768px) {
+    div[style*="grid-template-columns:1fr 300px"] {
+      display: block !important;
+    }
+    div[style*="grid-template-columns:1fr 300px"] > div:last-child {
+      margin-top: 16px;
+    }
+  }
+</style>

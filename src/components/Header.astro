@@ -1,0 +1,91 @@
+---
+// Header component
+---
+
+<header>
+  <div class="site nav-wrap" role="navigation" aria-label="Hlavní navigace">
+    <div class="brand" aria-hidden="true">
+      <a href="/" class="brand">
+        <img src="/images/logo.png" alt="WW-CB logo" id="secret-admin-logo">
+      </a>
+      <div>
+        <h1>WW-CB</h1>
+        <div class="muted" style="font-size:12px">Divoká voda České Budějovice</div>
+      </div>
+    </div>
+
+    <nav class="primary" id="primaryNav" aria-label="Hlavní menu">
+      <a href="/" data-i18n="nav.home" class="nav-link">Ahoj</a>
+      <a href="/kdy-tece-kanal" data-i18n="nav.canal" class="nav-link">Kanál</a>
+      <a href="/media" data-i18n="nav.news" class="nav-link">Aktuality</a>
+      <a href="/fotogalerie" data-i18n="nav.gallery" class="nav-link">Fotogalerie</a>
+      <a href="/program" data-i18n="nav.program" class="nav-link">Program</a>
+      <a href="/about" data-i18n="nav.about" class="nav-link">O nás</a>
+      <a href="/contact" class="nav-link btn" data-i18n="nav.contact">Kontakt</a>
+    </nav>
+
+    <div class="controls">
+      <button id="langToggle" class="btn" aria-label="Přepnout jazyk"><span id="langLabel" class="flag">CZ</span></button>
+      <button id="themeToggle" class="btn" aria-label="Přepnout světlý/tmavý režim">🌓</button>
+      <button class="hamburger" id="hamburger" aria-label="Otevřít mobilní menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Panel -->
+<div class="mobile-panel" id="mobilePanel" aria-hidden="true">
+  <div class="overlay" id="mobileOverlay"></div>
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 style="margin:0">Menu</h2>
+      <button id="closePanel" class="btn" aria-label="Zavřít menu">✕</button>
+    </div>
+    <nav>
+      <a href="/" data-i18n="nav.home" class="nav-link" style="display:block;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1)">Ahoj</a>
+      <a href="/kdy-tece-kanal" data-i18n="nav.canal" class="nav-link" style="display:block;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1)">Kanál</a>
+      <a href="/media" data-i18n="nav.news" class="nav-link" style="display:block;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1)">Aktuality</a>
+      <a href="/fotogalerie" data-i18n="nav.gallery" class="nav-link" style="display:block;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1)">Fotogalerie</a>
+      <a href="/program" data-i18n="nav.program" class="nav-link" style="display:block;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1)">Program</a>
+      <a href="/about" data-i18n="nav.about" class="nav-link" style="display:block;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.1)">O nás</a>
+      <a href="/contact" data-i18n="nav.contact" class="nav-link" style="display:block;padding:12px 0;">Kontakt</a>
+    </nav>
+  </div>
+</div>
+
+<script is:inline>
+// Tajný admin vstup - 5x klik na logo obrázek do 5 sekund
+document.addEventListener('DOMContentLoaded', function() {
+  let clicks = 0;
+  let timer = null;
+  
+  const logoImg = document.getElementById('secret-admin-logo');
+  const logoLink = logoImg ? logoImg.closest('a') : null;
+  
+  if (logoImg && logoLink) {
+    logoLink.addEventListener('click', function(e) {
+      e.preventDefault(); // Vždycky zastavíme default behavior
+      
+      clicks++;
+      
+      if (clicks === 1) {
+        timer = setTimeout(() => { 
+          clicks = 0; 
+        }, 5000);
+      }
+      
+      if (clicks === 2) {
+        clearTimeout(timer);
+        clicks = 0;
+        window.location.href = '/admin/index.html';
+      } else if (clicks < 2) {
+        // Pokud není 5 kliků, pošli na homepage po malé pauze
+        setTimeout(() => {
+          if (clicks < 2) {
+            window.location.href = '/';
+          }
+        }, 300); // 300ms pauza aby se stihly spočítat další kliky
+      }
+    });
+  }
+});
+</script>

@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+
+const info = await getEntry('race-info', 'info');
+const { Content } = info ? await info.render() : { Content: null };
+---
+
+<Layout title="Race Info — WW-CB">
+  <h2 class="section-title" data-i18n="aside.race">Race Info</h2>
+
+  {Content ? (
+    <div class="card">
+      <div class="content prose">
+        <Content />
+      </div>
+    </div>
+  ) : (
+    <div class="card" style="text-align:center;padding:60px 20px;color:var(--muted);">
+      <p style="margin:0;font-size:16px;">Zatím žádné informace.</p>
+      <p style="margin:12px 0 0;font-size:13px;">Obsah se upravuje v administraci.</p>
+    </div>
+  )}
+</Layout>
+
+<style>
+  .prose :global(h2) { font-size:20px;font-weight:700;margin:24px 0 12px; }
+  .prose :global(h3) { font-size:17px;font-weight:600;margin:20px 0 8px; }
+  .prose :global(p)  { margin:0 0 12px;line-height:1.7;color:var(--text); }
+  .prose :global(ul),
+  .prose :global(ol) { padding-left:20px;margin:0 0 12px; }
+  .prose :global(li) { margin-bottom:4px;line-height:1.6; }
+  .prose :global(a)  { color:var(--primary);text-decoration:none; }
+  .prose :global(a:hover) { text-decoration:underline; }
+  .prose :global(hr) { border:none;border-top:1px solid rgba(128,128,128,0.15);margin:24px 0; }
+</style>

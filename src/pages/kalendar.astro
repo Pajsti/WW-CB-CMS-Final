@@ -1,0 +1,109 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+const settings = await getEntry('settings', 'site-settings');
+if (!settings?.data.showKalendar) return Astro.redirect('/');
+
+const events = (await getCollection('events')).sort(
+  (a, b) => a.data.startDate.valueOf() - b.data.startDate.valueOf()
+);
+
+const colors: Record<string,string> = { zavod:'#ef4444', trenink:'#3b82f6', akce:'#8b5cf6' };
+const labels: Record<string,string> = { zavod:'Závod', trenink:'Trénink', akce:'Akce' };
+
+const fmtDate = (d: Date) => d.toLocaleDateString('cs-CZ', { day:'numeric', month:'short' });
+const fmtTime = (d: Date) => d.toLocaleTimeString('cs-CZ', { hour:'2-digit', minute:'2-digit' });
+
+function gcalUrl(e: typeof events[0]) {
+  const pad = (n: number) => String(n).padStart(2,'0');
+  const fmt = (d: Date) =>
+    `${d.getUTCFullYear()}${pad(d.getUTCMonth()+1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
+  const start = fmt(e.data.startDate);
+  const end   = e.data.endDate
+    ? fmt(e.data.endDate)
+    : fmt(new Date(e.data.startDate.valueOf() + 3600000));
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(e.data.title)}&dates=${start}/${end}&location=${encodeURIComponent(e.data.location)}`;
+}
+---
+
+<Layout title="Kalendář — WW-CB">
+  <h2 class="section-title" data-i18n="cal.title">Kalendář</h2>
+
+  <!-- Legenda -->
+  <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap;">
+    {Object.entries(labels).map(([k,v]) => (
+      <div style="display:flex;align-items:center;gap:7px;">
+        <div style={`width:12px;height:12px;border-radius:3px;background:${colors[k]}`}></div>
+        <span style="font-size:13px;color:var(--muted)">{v}</span>
+      </div>
+    ))}
+  </div>
+
+  <!-- Nadcházející -->
+  <div class="card" style="margin-bottom:20px;">
+    <h3 style="margin:0 0 16px;font-size:16px;" data-i18n="cal.upcoming">Nadcházející</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      {events.filter(e => e.data.startDate >= new Date()).slice(0,5).map(event => (
+        <div style={`border-left:4px solid ${colors[event.data.category]};padding:12px 16px;border-radius:6px;background:rgba(128,128,128,0.04);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;`}>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:15px;font-weight:600;">{event.data.title}</div>
+            <div style="font-size:13px;color:var(--muted);margin-top:3px;">
+              {event.data.location} · {fmtDate(event.data.startDate)} · {fmtTime(event.data.startDate)}
+              {event.data.endDate && ` – ${fmtTime(event.data.endDate)}`}
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+            <div style={`padding:3px 10px;border-radius:4px;background:${colors[event.data.category]}22;color:${colors[event.data.category]};font-size:11px;font-weight:700;`}>
+              {labels[event.data.category]}
+            </div>
+            <a href={gcalUrl(event)} target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:6px;background:rgba(128,128,128,0.07);color:var(--muted);font-size:12px;text-decoration:none;border:1px solid rgba(128,128,128,0.12);white-space:nowrap;"
+               data-i18n="cal.addgcal">
+              + Google Kalend.
+            </a>
+          </div>
+        </div>
+      ))}
+      {events.filter(e => e.data.startDate >= new Date()).length === 0 && (
+        <div style="text-align:center;padding:30px;color:var(--muted);">
+          <p style="margin:0;">Žádné nadcházející události.</p>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <!-- Všechny události -->
+  <div class="card">
+    <h3 style="margin:0 0 16px;font-size:16px;" data-i18n="cal.all">Všechny události</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      {events.map(event => (
+        <div style={`display:flex;gap:16px;align-items:center;padding:12px;border-radius:6px;border-left:4px solid ${colors[event.data.category]};background:rgba(128,128,128,0.04);`}>
+          <div style="flex:0 0 48px;text-align:center;">
+            <div style="font-size:20px;font-weight:700;line-height:1;">{event.data.startDate.getDate()}</div>
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;">
+              {event.data.startDate.toLocaleDateString('cs-CZ',{month:'short'})}
+            </div>
+          </div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:14px;font-weight:600;">{event.data.title}</div>
+            <div style="font-size:12px;color:var(--muted);">
+              {event.data.location} · {fmtTime(event.data.startDate)}
+              {event.data.endDate && ` – ${fmtTime(event.data.endDate)}`}
+            </div>
+          </div>
+          <a href={gcalUrl(event)} target="_blank" rel="noopener"
+             style="flex-shrink:0;padding:5px 10px;border-radius:5px;background:rgba(128,128,128,0.07);color:var(--muted);font-size:11px;text-decoration:none;border:1px solid rgba(128,128,128,0.1);white-space:nowrap;"
+             data-i18n="cal.addgcal">
+            + Google Kalend.
+          </a>
+        </div>
+      ))}
+      {events.length === 0 && (
+        <div style="text-align:center;padding:30px;color:var(--muted);">
+          <p style="margin:0;">Zatím žádné události.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</Layout>

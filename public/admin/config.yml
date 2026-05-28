@@ -1,0 +1,131 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/gallery/uploads"
+public_folder: "/gallery/uploads"
+
+locale: "cs"
+
+collections:
+  - name: "news"
+    label: "Aktuality"
+    label_singular: "Clanek"
+    folder: "src/content/news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Nazev", name: "title", widget: "string" }
+      - { label: "Datum", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Kratky popis", name: "excerpt", widget: "string" }
+      - { label: "Nahledovy obrazek", name: "image", widget: "image" }
+      - label: "Galerie fotek"
+        name: "images"
+        widget: "list"
+        allow_add: true
+        required: false
+        fields:
+          - { label: "Fotka", name: "src", widget: "image" }
+      - label: "Obsah"
+        name: "body"
+        widget: "markdown"
+        hint: 'Pro vlozeni mapy: $$location: "49.7437N, 13.3736E"$$'
+
+  - name: "gallery"
+    label: "Fotogalerie"
+    label_singular: "Galerie"
+    folder: "src/content/gallery"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Nazev", name: "title", widget: "string" }
+      - { label: "Datum", name: "date", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ss.SSSZ", date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Nahledovy obrazek", name: "cover", widget: "image" }
+      - label: "Fotky"
+        name: "photos"
+        widget: "list"
+        allow_add: true
+        fields:
+          - { label: "Fotka", name: "src", widget: "image" }
+
+  - name: "events"
+    label: "Kalendar udalosti"
+    label_singular: "Udalost"
+    folder: "src/content/events"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Nazev", name: "title", widget: "string" }
+      - { label: "Datum zacatku", name: "startDate", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ss.SSSZ" }
+      - { label: "Datum konce", name: "endDate", widget: "datetime", format: "YYYY-MM-DDTHH:mm:ss.SSSZ", required: false }
+      - { label: "Misto", name: "location", widget: "string" }
+      - label: "Kategorie"
+        name: "category"
+        widget: "select"
+        options: ["zavod", "trenink", "akce"]
+        default: "akce"
+      - { label: "Popis", name: "body", widget: "markdown" }
+
+  - name: "canal"
+    label: "Provoz kanalu"
+    files:
+      - label: "Kdy tece kanal"
+        name: "schedule"
+        file: "src/content/canal/schedule.md"
+        fields:
+          - { label: "Pondeli", name: "monday", widget: "string", required: false, hint: "Napr: 6:00-8:00 | Prazdne = Zavreno" }
+          - { label: "Utery", name: "tuesday", widget: "string", required: false }
+          - { label: "Streda", name: "wednesday", widget: "string", required: false }
+          - { label: "Ctvrtek", name: "thursday", widget: "string", required: false }
+          - { label: "Patek", name: "friday", widget: "string", required: false }
+          - { label: "Sobota", name: "saturday", widget: "string", required: false }
+          - { label: "Nedele", name: "sunday", widget: "string", required: false }
+          - { label: "Poznamka", name: "note", widget: "text", required: false }
+
+  - name: "settings"
+    label: "Nastaveni webu"
+    files:
+      - label: "Sekce a odkazy"
+        name: "site-settings"
+        file: "src/content/settings/site-settings.md"
+        fields:
+          - { label: "--- Hlavni stranka ---", name: "showLatestNews", widget: "boolean", default: true, hint: "Carousel nejnovejsich clanku na homepage" }
+          - { label: "--- Rychle odkazy (sidebar) ---", name: "showQuickLinks", widget: "boolean", default: true, hint: "Vypnuti skryje cely sidebar" }
+          - { label: "Kanal", name: "showKanal", widget: "boolean", default: true }
+          - { label: "Kalendar udalosti", name: "showKalendar", widget: "boolean", default: true }
+          - { label: "Live vysledky", name: "showLiveTV", widget: "boolean", default: true }
+          - { label: "URL live vysledku", name: "liveResultsUrl", widget: "string", required: false, hint: "Napr: https://www.canoeresults.eu" }
+          - { label: "Race Office", name: "showRaceOffice", widget: "boolean", default: true }
+          - { label: "Oficialni dokumenty", name: "showOfficialDocs", widget: "boolean", default: true }
+          - { label: "Sponzori", name: "showSponsors", widget: "boolean", default: true }
+
+  - name: "documents"
+    label: "Dokumenty"
+    label_singular: "Dokument"
+    folder: "src/content/documents"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "Nazev", name: "title", widget: "string" }
+      - { label: "Soubor", name: "file", widget: "file", media_folder: "/public/docs", public_folder: "/docs" }
+      - { label: "Popis", name: "description", widget: "string", required: false }
+      - { label: "Velikost (napr. PDF, 420 KB)", name: "size", widget: "string", required: false }
+
+  - name: "race-info"
+    label: "Race Info"
+    files:
+      - label: "Informace o zavode"
+        name: "info"
+        file: "src/content/race-info/info.md"
+        fields:
+          - { label: "Nadpis", name: "title", widget: "string" }
+          - { label: "Obsah", name: "body", widget: "markdown" }
+

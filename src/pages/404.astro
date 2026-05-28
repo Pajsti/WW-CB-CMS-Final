@@ -1,0 +1,14 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="404 — Stránka nenalezena">
+  <div class="card" style="text-align:center;padding:60px 30px;max-width:600px;margin:80px auto;">
+    <div style="font-size:120px;font-weight:800;background:linear-gradient(135deg,#0ea5e9,#0284c7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px;">404</div>
+    <h1 style="margin:0 0 16px;" data-i18n="404.title">Stránka nenalezena</h1>
+    <p style="color:var(--muted);margin:0 0 40px;">Stránka neexistuje nebo byla přesunuta.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="/" class="btn" style="padding:16px 32px;" data-i18n="404.home">← Zpět domů</a>
+      <a href="/media" class="btn" style="padding:16px 32px;background:transparent;border:2px solid var(--primary);color:var(--primary);" data-i18n="nav.news">Aktuality</a>
+    </div>
+  </div>
+</Layout>
