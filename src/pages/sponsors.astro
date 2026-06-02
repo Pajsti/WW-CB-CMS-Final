@@ -6,30 +6,60 @@ import Layout from '../layouts/Layout.astro';
   <section class="sponsors">
     <h2>Sponzoři</h2>
     <div style="text-align: center;" class="sponsor-grid">
-      <img src="/images/sponsor1.png" alt="Sponsor 1">
-      <img src="/images/sponsor2.png" alt="Sponsor 2">
-      <img src="/images/sponsor3.png" alt="Sponsor 3">
-      <img src="/images/sponsor4.png" alt="Sponsor 4">
-      <img src="/images/sponsor5.png" alt="Sponsor 5">
-      <img src="/images/sponsor6.png" alt="Sponsor 6">
-      <img src="/images/sponsor7.png" alt="Sponsor 7">
-      <img src="/images/sponsor8.png" alt="Sponsor 8">
+      <img src="/images/sponsor1sw1.png" alt="Sponsor 1" class="theme-logo">
+      <img src="/images/sponsor2sw1.png" alt="Sponsor 2" class="theme-logo">
+      <img src="/images/sponsor3sw1.png" alt="Sponsor 3" class="theme-logo">
+      <img src="/images/sponsor4sw1.png" alt="Sponsor 4" class="theme-logo">
+      <img src="/images/sponsor5sw1.png" alt="Sponsor 5" class="theme-logo">
+      <img src="/images/sponsor6.png"    alt="Sponsor 6" class="theme-logo">
+      <img src="/images/sponsor7.png"    alt="Sponsor 7" class="theme-logo">
+      <img src="/images/sponsor8sw1.png" alt="Sponsor 8" class="theme-logo">
     </div>
   </section>
 
   <section class="dotace">
     <h2>Dotační podpora</h2>
     <div class="dotace-grid">
-      <img src="/images/dotace1.png" alt="Dotace 1">
+      <img src="/images/dotace1sw1.png" alt="Dotace 1" class="theme-logo">
       <p>
         Tento projekt je spolufinancován Statutárním městem České Budějovice.<br><br>
         Tento projekt je spolufinancován z dotačního programu Jihočeského kraje.
       </p>
-      <img src="/images/dotace2.png" alt="Dotace 2">
+      <img src="/images/dotace2.png" alt="Dotace 2" class="theme-logo">
     </div>
   </section>
 </Layout>
 
 <script is:inline>
 document.body.setAttribute('data-page', 'sponsors');
+</script>
+
+<script>
+  applyThemeLogos();
+  window.addEventListener('themechange', applyThemeLogos);
+
+  function applyThemeLogos() {
+    var isDark = !document.documentElement.classList.contains('light');
+    document.querySelectorAll('img.theme-logo').forEach(function(img) {
+      switchLogoTheme(img, isDark);
+    });
+  }
+
+  function switchLogoTheme(img, isDark) {
+    var src = img.src;
+    var filename = src.split('/').pop();
+    var dotIdx = filename.lastIndexOf('.');
+    var name = filename.substring(0, dotIdx);
+    var ext  = filename.substring(dotIdx);
+    var suffix = name.slice(-3).toLowerCase();
+    if (suffix !== 'sw1' && suffix !== 'sw0') return;
+    var base = name.slice(0, -3);
+    var wantSuffix = isDark ? 'sw0' : 'sw1';
+    var wantSrc = src.replace(filename, base + wantSuffix + ext);
+    if (img.getAttribute('src') === '/images/' + base + wantSuffix + ext) return;
+    var test = new Image();
+    test.onload  = function() { img.src = wantSrc; };
+    test.onerror = function() {};
+    test.src = wantSrc;
+  }
 </script>

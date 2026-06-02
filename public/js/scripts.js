@@ -10,7 +10,7 @@ const i18n = {
     "feat.gallery":"Fotogalerie","feat.gallery-desc":"Fotky ze závodů a tréninků.","feat.open":"Otevřít",
     "feat.schedule":"Harmonogram","feat.schedule-desc":"Program závodních dnů a startovní listiny.","feat.view":"Zobrazit",
     "aside.quick":"Rychlé odkazy","aside.live":"Live Výsledky","aside.race":"Race Info","aside.docs":"Oficiální dokumenty","aside.sponsors":"Sponzoři",
-    "news.title":"Nejnovější","canal.title":"Kanál","canal.day":"Den","canal.times":"Časy provozu","canal.closed":"Zavřeno","canal.today":"Dnes","nav.kal":"Kalendář","cal.title":"Kalendář","cal.upcoming":"Nadcházející","cal.all":"Všechny události","cal.addgcal":"+ Google Kalend.","day.monday":"Pondělí","day.tuesday":"Úterý","day.wednesday":"Středa","day.thursday":"Čtvrtek","day.friday":"Pátek","day.saturday":"Sobota","day.sunday":"Neděle","404.title":"Stránka nenalezena","404.home":"← Zpět domů"
+    "news.title":"Nejnovější","canal.title":"Kanál","canal.day":"Den","canal.times":"Časy provozu","canal.closed":"Zavřeno","canal.today":"Dnes","nav.kal":"Kalendář","cal.title":"Kalendář","cal.upcoming":"Nadcházející","cal.all":"Všechny události","cal.addgcal":"+ Google Kalend.","day.monday":"Pondělí","day.tuesday":"Úterý","day.wednesday":"Středa","day.thursday":"Čtvrtek","day.friday":"Pátek","day.saturday":"Sobota","day.sunday":"Neděle","docs.title":"Oficiální dokumenty","404.title":"Stránka nenalezena","404.home":"← Zpět domů"
   },
   en: {
     "nav.home":"Home","nav.canal":"Canal","nav.news":"News","nav.gallery":"Gallery","nav.program":"Venue","nav.about":"About","nav.contact":"Contact",
@@ -19,7 +19,7 @@ const i18n = {
     "feat.gallery":"Gallery","feat.gallery-desc":"Photos from races and training.","feat.open":"Open",
     "feat.schedule":"Schedule","feat.schedule-desc":"Race day schedule and start lists.","feat.view":"View",
     "aside.quick":"Quick links","aside.live":"Live Results","aside.race":"Race Info","aside.docs":"Official documents","aside.sponsors":"Sponsors",
-    "news.title":"Latest","canal.title":"Canal Schedule","canal.day":"Day","canal.times":"Operating hours","canal.closed":"Closed","canal.today":"Today","nav.kal":"Calendar","cal.title":"Calendar","cal.upcoming":"Upcoming","cal.all":"All events","cal.addgcal":"+ Google Cal.","day.monday":"Monday","day.tuesday":"Tuesday","day.wednesday":"Wednesday","day.thursday":"Thursday","day.friday":"Friday","day.saturday":"Saturday","day.sunday":"Sunday","404.title":"Page not found","404.home":"← Back home"
+    "news.title":"Latest","canal.title":"Canal Schedule","canal.day":"Day","canal.times":"Operating hours","canal.closed":"Closed","canal.today":"Today","nav.kal":"Calendar","cal.title":"Calendar","cal.upcoming":"Upcoming","cal.all":"All events","cal.addgcal":"+ Google Cal.","day.monday":"Monday","day.tuesday":"Tuesday","day.wednesday":"Wednesday","day.thursday":"Thursday","day.friday":"Friday","day.saturday":"Saturday","day.sunday":"Sunday","docs.title":"Official documents","404.title":"Page not found","404.home":"← Back home"
   }
 };
 
@@ -40,10 +40,13 @@ function setTheme(theme) {
 }
 
 function updateLogo(theme) {
-  const logo = document.querySelector('header img[alt*="logo"]');
-  if (logo) {
-    logo.src = theme === 'light' ? '/images/logo.png' : '/images/logo1.png';
+  var s = document.getElementById('logo-theme');
+  if (s) {
+    s.textContent = theme === 'light'
+      ? '.logo-dark{display:none!important}.logo-light{display:block!important}'
+      : '.logo-light{display:none!important}.logo-dark{display:block!important}';
   }
+  window.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
 }
 
 function toggleTheme() {

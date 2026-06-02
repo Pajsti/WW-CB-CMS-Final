@@ -2,19 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Jídlo / Správa areálu — WW-CB">
+<Layout title="Zázemí — WW-CB">
   <div class="box-grid">
     <div class="box">
       <h2 class="box-title">Jídlo</h2>
-      <img src="/images/sponsor5.png" alt="Jídlo"/>
+      <img src="/images/sponsor5sw1.png" alt="Jídlo" class="theme-logo"/>
       <p>Hospoda ve vodáckém areálu, pod vodáckým vedením, zdaleka nejen pro vodáky.</p>
       <p>Minutky i hotovky. Po předchozí domluvě lze zajistit stravování pro celou skupinu (polopenze, plná penze).
       Otevřeno denně od dubna do září.</p>
-      <img src="/images/nakanale.png" alt="Jídlo"/>
+      <img src="/images/nakanale.png" alt="Jídlo" class="theme-logo"/>
     </div>
     <div class="box">
       <h2 class="box-title">Správa areálu a ubytování</h2>
-      <img src="/images/sponsor6.png" alt="Správa areálu a ubytování"/>
+      <img src="/images/sponsor6.png" alt="Správa areálu a ubytování" class="theme-logo"/>
       <ul>
         <li>Plánování tréninků</li>
         <li>Ubytovna</li>
@@ -22,7 +22,37 @@ import Layout from '../layouts/Layout.astro';
         <li>Půjčovna vybavení</li>
       </ul>
       <p>Kontakt: info@raftingcb.cz</p>
-      <img src="/images/kanal.png" alt="Správa areálu a ubytování"/>
+      <img src="/images/kanal.png" alt="Správa areálu a ubytování" class="theme-logo"/>
     </div>
   </div>
 </Layout>
+
+<script>
+  applyThemeLogos();
+  window.addEventListener('themechange', applyThemeLogos);
+
+  function applyThemeLogos() {
+    var isDark = !document.documentElement.classList.contains('light');
+    document.querySelectorAll('img.theme-logo').forEach(function(img) {
+      switchLogoTheme(img, isDark);
+    });
+  }
+
+  function switchLogoTheme(img, isDark) {
+    var src = img.src;
+    var filename = src.split('/').pop();
+    var dotIdx = filename.lastIndexOf('.');
+    var name = filename.substring(0, dotIdx);
+    var ext  = filename.substring(dotIdx);
+    var suffix = name.slice(-3).toLowerCase();
+    if (suffix !== 'sw1' && suffix !== 'sw0') return;
+    var base = name.slice(0, -3);
+    var wantSuffix = isDark ? 'sw0' : 'sw1';
+    var wantSrc = src.replace(filename, base + wantSuffix + ext);
+    if (img.getAttribute('src') === '/images/' + base + wantSuffix + ext) return;
+    var test = new Image();
+    test.onload  = function() { img.src = wantSrc; };
+    test.onerror = function() {};
+    test.src = wantSrc;
+  }
+</script>

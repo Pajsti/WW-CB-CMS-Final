@@ -18,15 +18,21 @@ const { title = 'WW-CB — Divoká voda České Budějovice', description = 'Ofi
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="icon" href="/favicon.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
   <script is:inline>
-    // Nastavit téma okamžitě (bez flash)
     (function() {
       var t = localStorage.getItem('wwcb_theme') || 'light';
       if (t === 'light') document.documentElement.classList.add('light');
+      // Okamžitě inject správné logo display před CSS renderingem
+      var s = document.createElement('style');
+      s.id = 'logo-theme';
+      s.textContent = t === 'light'
+        ? '.logo-dark{display:none!important}.logo-light{display:block!important}'
+        : '.logo-light{display:none!important}.logo-dark{display:block!important}';
+      document.head.appendChild(s);
     })();
   </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <Header />

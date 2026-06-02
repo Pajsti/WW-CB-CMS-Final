@@ -550,6 +550,12 @@ a:focus {
   outline-offset:2px;
 }
 
+/* Kontakt - žádný outline */
+a[href="/contact"] {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 
 /* Print styles */
 @media print {
@@ -1101,3 +1107,10 @@ aside .quicklist a {
   color:var(--muted);
   font-size:14px;
 }
+
+/* Logo switching — CSS only, no flash */
+.logo-dark  { display: none; }
+.logo-light { display: block; }
+
+html:not(.light) .logo-dark  { display: block; }
+html:not(.light) .logo-light { display: none; }
