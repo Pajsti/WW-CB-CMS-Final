@@ -4,7 +4,7 @@ Moderní webová stránka pro klub Divoká voda České Budějovice postavená n
 
 ---
 
-## 📋 Obsah
+## Obsah
 
 - [Quick Start](#-quick-start)
 - [Deployment](#-deployment)
@@ -16,7 +16,7 @@ Moderní webová stránka pro klub Divoká voda České Budějovice postavená n
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Požadavky
 - **Node.js** 18+ ([stáhnout zde](https://nodejs.org))
@@ -53,7 +53,7 @@ Build vytvoří složku `dist/` s kompletním statickým webem.
 
 ---
 
-## 📦 Deployment
+## Deployment
 
 ### Netlify (doporučeno)
 
@@ -93,7 +93,7 @@ Build vytvoří složku `dist/` s kompletním statickým webem.
 
 ---
 
-## 📁 Struktura projektu
+## Struktura projektu
 
 ```
 WW-CB-CMS-Final/
@@ -136,7 +136,7 @@ WW-CB-CMS-Final/
 
 ---
 
-## ✍️ Správa obsahu
+## Správa obsahu
 
 ### Přístup do CMS
 
@@ -186,20 +186,20 @@ WW-CB-CMS-Final/
 
 1. **Nastavení webu → Viditelnost sekcí**
 2. Zapni/vypni:
-   - ✅ **Zobrazit kalendář** → tlačítko na homepage + stránka `/kalendar`
-   - ✅ **Zobrazit rychlé odkazy** → aside panel na homepage
-   - ✅ **Zobrazit Live TV** → odkaz v rychlých odkazech
-   - ✅ **Zobrazit Race Office** → odkaz v rychlých odkazech
-   - ✅ **Zobrazit oficiální dokumenty** → odkaz v rychlých odkazech
-   - ✅ **Zobrazit sponzory** → odkaz v rychlých odkazech
-   - ✅ **Zobrazit nejnovější články** → carousel na homepage
+   -  **Zobrazit kalendář** → tlačítko na homepage + stránka `/kalendar`
+   -  **Zobrazit rychlé odkazy** → aside panel na homepage
+   -  **Zobrazit Live TV** → odkaz v rychlých odkazech
+   -  **Zobrazit Race Office** → odkaz v rychlých odkazech
+   -  **Zobrazit oficiální dokumenty** → odkaz v rychlých odkazech
+   -  **Zobrazit sponzory** → odkaz v rychlých odkazech
+   -  **Zobrazit nejnovější články** → carousel na homepage
 3. **Save → Publish**
 
 **Live změny:** Netlify rebuildne → sekce se zobrazí/skryjí
 
 ---
 
-## ⚙️ Nastavení
+## Nastavení
 
 ### Email templates (Netlify Identity)
 
@@ -433,7 +433,7 @@ logoLink.addEventListener('click', (e) => {
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### CMS neukazuje články
 
@@ -492,11 +492,11 @@ Počkej na Netlify build → refresh CMS.
 # Najdi problémový soubor v build logu
 # Zkontroluj frontmatter:
 ---
-title: "Název"  # ✅ string
-date: 2025-12-20T00:00:00.000Z  # ✅ date ISO formát
-excerpt: "Popis"  # ✅ string
-image: "/path.jpg"  # ✅ string
-images:  # ✅ array of objects
+title: "Název"  #  string
+date: 2025-12-20T00:00:00.000Z  #  date ISO formát
+excerpt: "Popis"  #  string
+image: "/path.jpg"  #  string
+images:  #  array of objects
   - src: "/foto1.jpg"
   - src: "/foto2.jpg"
 ---
@@ -525,17 +525,17 @@ images:  # ✅ array of objects
 
 **1. Špatná cesta v .md:**
 ```yaml
-# ❌ Relativní cesta
+#  Relativní cesta
 image: "gallery/foto.jpg"
 
-# ✅ Absolutní cesta (začíná /)
+#  Absolutní cesta (začíná /)
 image: "/gallery/foto.jpg"
 ```
 
 **2. Fotka není v `public/`:**
 ```
-public/gallery/uploads/foto.jpg  ✅
-src/gallery/uploads/foto.jpg     ❌ (nezkopíruje se do dist/)
+public/gallery/uploads/foto.jpg  
+src/gallery/uploads/foto.jpg      (nezkopíruje se do dist/)
 ```
 
 **3. Build cache:**
@@ -566,7 +566,7 @@ git push origin main --force
 
 ---
 
-## 📚 Další informace
+## Další informace
 
 ### Dokumentace
 
@@ -585,14 +585,14 @@ git push origin main --force
 
 ### Výhody tohoto setupu
 
-✅ **Statický web** → rychlý, bezpečný, levný hosting  
-✅ **Git jako databáze** → versionování, rollback, offline edit  
-✅ **No-code CMS** → netechničtí uživatelé mohou spravovat obsah  
-✅ **TypeScript validace** → build failne při chybných datech  
-✅ **Automatický deploy** → push → web je live za ~1 minutu  
+ **Statický web** → rychlý, bezpečný, levný hosting  
+ **Git jako databáze** → versionování, rollback, offline edit  
+ **No-code CMS** → netechničtí uživatelé mohou spravovat obsah  
+ **TypeScript validace** → build failne při chybných datech  
+ **Automatický deploy** → push → web je live za ~1 minutu  
 
 ---
 
-## 🤝 Podpora
+## Podpora
 
 **Issues:** https://github.com/Pajsti/WW-CB-CMS-Final/issues  
