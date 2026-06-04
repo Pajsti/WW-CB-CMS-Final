@@ -240,7 +240,7 @@ V `netlify.toml`:
 
 ---
 
-## 🔧 Jak to funguje
+## Jak to funguje
 
 ### Architektura: Astro Content Collections
 
